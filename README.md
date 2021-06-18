@@ -10,21 +10,12 @@ The most commonly used method to detect outliers is visualization of the data, t
 First we read the file using read.csv() command and save it in a variable
 
 
-Code
-ozoneData <- read.csv("ozone.csv", stringsAsFactors=FALSE)
 
 
 
 Detect Outlier in the Univariate Continuous Variable:
 
 
-Code:
-
-
-outlier_values <- boxplot.stats(ozoneData$pressure_height)$out
-boxplot(ozoneData$pressure_height, main="Pressure Height", boxwex=0.1)
-mtext(paste("Outliers: ", paste(outlier_values, collapse=", ")), cex=0.6)
-outlier_values[which(outlier_values %in% boxplot.stats(ozoneData$pressure_height)$out)]
 
 
 
@@ -33,28 +24,11 @@ outlier_values[which(outlier_values %in% boxplot.stats(ozoneData$pressure_height
 Detect Outliers in Bivariate Categorical Variable 
 
 
-CODE
-
-
-boxplot(ozone_reading ~ Month, data=ozoneData, main="Ozone reading across months")
-
- 
 
 
 
 Detect Outlier in Multivariate 
 
-
-Code
-
-
-mod <- lm(ozone_reading ~ ., data=ozoneData)
-cooksd <- cooks.distance(mod)
-plot(cooksd, pch="*", cex=2, main="Influential Observation by Cooks distance")
-abline(h = 4*mean(cooksd, na.rm=T), col="red")  
-text(x=1:length(cooksd)+1, y=cooksd, labels=ifelse(cooksd>4*mean(cooksd, na.rm=T),names(cooksd),""), col="red")
-influential <- as.numeric(names(cooksd)[(cooksd > 4*mean(cooksd, na.rm=T))]) 
-head(ozoneData[influential, ])
 
 
 
